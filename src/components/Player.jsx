@@ -96,7 +96,7 @@ function Player() {
       />
       <div className={style.controllerArea}>
         <SpeedController audioComponent={audioComponent} />
-        <PitchController audio={audio} audioComponent={audioComponent} />
+        {/* <PitchController audio={audio} audioComponent={audioComponent} /> */}
       </div>
     </Card>
   );
