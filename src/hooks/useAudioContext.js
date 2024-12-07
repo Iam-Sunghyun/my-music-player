@@ -9,13 +9,15 @@ export default function useAudioContext({ audioComponent }) {
   const { current } = useMusicList();
 
   const initAudioContext = () => {
-    const context = new (window.AudioContext || window.webkitAudioContext)();
+    if (!audioContext) {
+      const context = new (window.AudioContext || window.webkitAudioContext)();
 
-    const analyserNode = context.createAnalyser(); // AnalyserNode 생성
-    analyserNode.fftSize = 512;
+      const analyserNode = context.createAnalyser(); // AnalyserNode 생성
+      analyserNode.fftSize = 512;
 
-    setAudioContext(context);
-    setAnalyser(analyserNode);
+      setAudioContext(context);
+      setAnalyser(analyserNode);
+    }
   };
 
   useEffect(() => {
