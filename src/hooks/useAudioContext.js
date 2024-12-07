@@ -24,7 +24,7 @@ export default function useAudioContext({ audioComponent }) {
     if (current && !audioContext && !analyser) {
       initAudioContext();
     }
-  }, [audioComponent, audioContext, analyser, current]);
+  }, [audioComponent, audioContext, analyser]);
 
   useEffect(() => {
     if (audioContext && analyser && audioComponent.current) {
