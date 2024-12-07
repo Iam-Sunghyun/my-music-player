@@ -1,0 +1,52 @@
+.list {
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 0;
+}
+
+/* .list::-webkit-scrollbar-thumb {
+  background-color: var(--light-blue-2);
+  border-radius: 15px;
+} */
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(203, 203, 203);
+  padding: 0.9rem;
+  cursor: pointer;
+  overflow-y: scroll;
+}
+
+.listItem span {
+  font-size: 1rem;
+}
+
+.listItem::-webkit-scrollbar {
+  width: 0;
+}
+
+.listItem:last-child {
+  border: 0px;
+}
+
+.listItemSelected {
+  background: var(--blue-3);
+  color: white;
+}
+
+.musicDetails {
+  display: flex;
+}
+
+.musicName {
+  font-size: 1.1rem;
+}
+
+.artistName {
+  color: var(--blue-4);
+  opacity: 0.8;
+}

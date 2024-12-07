@@ -1,0 +1,5 @@
+.audioVisualizer {
+  box-shadow: 0 0 10px rgb(228, 228, 228);
+  margin: 10px 0;
+  /* background: linear-gradient(to top, var(--light-blue-1), #ffffff); */
+}

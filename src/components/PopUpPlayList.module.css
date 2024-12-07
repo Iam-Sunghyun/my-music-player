@@ -1,0 +1,42 @@
+.popUpPlayList {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: white;
+  margin: 0;
+  max-height: 25rem;
+  transition: transform 0.5s ease;
+  transform: translateY(102%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 15px;
+
+  width: 100%;
+}
+
+.header p {
+  font-size: 1.2rem;
+}
+
+.popIn {
+  transform: translateY(102%);
+}
+
+.popUp {
+  transform: translateY(0px);
+}
+
+.playList ul li {
+  display: flex;
+}
+
+@media screen and (min-width: 48rem) {
+  .popUpPlayList {
+    display: none;
+  }
+}

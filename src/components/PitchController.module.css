@@ -1,0 +1,19 @@
+.pitchController {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.pitchController div {
+  width: 3rem;
+}
+
+.pitch {
+  width: 2rem;
+  text-align: center;
+}
+
+.pitchController input {
+  width: 10rem;
+}

@@ -1,0 +1,27 @@
+.playList {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  height: 42rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 1rem 1rem;
+  width: 100%;
+}
+
+.header p {
+  font-size: 1.2rem;
+}
+
+.playList ul li {
+  display: flex;
+}
+
+@media screen and (max-width: 48rem) {
+  .playList {
+    display: none;
+  }
+}

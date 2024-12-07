@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+}
+
+.wrapper :global(span) {
+  user-select: none;
+  cursor: pointer;
+}

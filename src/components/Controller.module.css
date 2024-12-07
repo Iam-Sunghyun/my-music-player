@@ -1,0 +1,89 @@
+.controls {
+  display: flex;
+  width: 100%;
+  height: 5rem;
+
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(var(--blue-3) 35%, var(--blue-5));
+  opacity: 0.8;
+  /* CSS background-clip 속성은 요소의 배경이 테두리, 안쪽 여백, 콘텐츠 상자 중 어디까지 차지할 지 지정합니다 */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.controls span:nth-child(2),
+.controls span:nth-child(4) {
+  font-size: 2.3rem;
+}
+
+.controlsLoop {
+  display: flex;
+  align-items: center;
+}
+
+.playPause {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  box-shadow: 0 0 8px rgb(157, 157, 157);
+  /* background: linear-gradient(white, rgb(221, 221, 221)); */
+}
+
+.playPause span {
+  font-size: 2.5rem;
+}
+
+.volume {
+  background: rgb(228, 228, 228);
+  width: 165px;
+  height: 30px;
+  position: absolute;
+  right: -40px;
+  bottom: 215px;
+  transform: rotate(270deg);
+}
+
+.progressArea {
+  width: 100%;
+  height: 6px;
+  /* background: linear-gradient(90deg, var(--light-blue-1), var(--light-blue-2)); */
+  background: var(--light-blue-1);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.progressBar {
+  width: 50%;
+  height: inherit;
+  background: linear-gradient(90deg, var(--blue-1), var(--blue-3));
+  position: relative;
+  border-radius: inherit;
+}
+
+.progressBar::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  background: var(--blue-4);
+  position: absolute;
+  top: -40%;
+  right: -4px;
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progressArea:hover .progressBar::before {
+  opacity: 1;
+}
+
+.timer {
+  display: flex;
+  margin-top: 4px;
+  justify-content: space-between;
+}

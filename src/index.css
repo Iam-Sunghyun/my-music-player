@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+}
+
+:root {
+  --light-blue-1: #d4f6ff;
+  --light-blue-2: #94e3fb;
+  --blue-1: #4cc9fe;
+  --blue-2: #0d92f4;
+  --blue-3: #2457ee;
+  --blue-4: #1340c6;
+  --blue-5: #061e68;
+}
+
+body {
+  width: 100vw;
+  min-width: 25rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--blue-5);
+}
+
+ul {
+  list-style: none;
+}
+
+/* file input 기존 디자인 삭제 */
+input[type="file"] {
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}

@@ -1,0 +1,26 @@
+.topBar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.topBar p {
+  font-size: 1.2rem;
+}
+
+#moreMusic {
+  visibility: hidden;
+}
+
+.clicked {
+  transform: scale(1.1);
+  color: var(--blue-4);
+}
+
+@media screen and (max-width: 48rem) {
+  #moreMusic {
+    visibility: visible;
+  }
+}

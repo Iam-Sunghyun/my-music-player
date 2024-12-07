@@ -1,0 +1,19 @@
+.speedController {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.speedController div {
+  width: 3rem;
+}
+
+.speed {
+  width: 2rem;
+  text-align: center;
+}
+
+.speedController input {
+  width: 10rem;
+}
