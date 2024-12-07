@@ -16,7 +16,7 @@ import * as Tone from "tone";
 function Player() {
   const [popUpPlayList, setPopUpPlayList] = useState(false);
   const { musics, setCurrent, current, setCurrentIndex, currentIndex } = useMusicList();
-  const [playPause, setPlayPause] = useState(true);
+  const [playPause, setPlayPause] = useState(false);
   const [loop, setLoop] = useState(0); // 0 -> 기본, 1 -> 루프, 2 -> 셔플
   const [volumeBtn, setVolumeBtn] = useState(false);
   const [volume, setVolume] = useState(50);
@@ -25,7 +25,7 @@ function Player() {
   const audio = new Audio(current?.objectURL); // HTMLAudioElement
   const audioComponent = useRef();
 
-  const { audioContext, analyser } = useAudioContext({ audioComponent });
+  const { analyser } = useAudioContext({ audioComponent });
 
   // 오디오 메타데이터 로드 이벤트
   audio.onloadedmetadata = () => {
@@ -63,7 +63,7 @@ function Player() {
   return (
     <Card className={style.playerCard}>
       <TopBar popUpPlayList={popUpPlayList} setPopUpPlayList={setPopUpPlayList} />
-      <AudioVisualizer audio={audioComponent} audioContext={audioContext} analyser={analyser} />
+      <AudioVisualizer analyser={analyser} />
       <SongDetails />
       <ProgressArea
         audio={audioComponent}
@@ -91,8 +91,8 @@ function Player() {
         src={current?.objectURL}
         onTimeUpdate={handleCurrentTime}
         onEnded={handleOnEnded}
-        hidden
         autoPlay
+        hidden
       />
       <div className={style.controllerArea}>
         <SpeedController audioComponent={audioComponent} />
