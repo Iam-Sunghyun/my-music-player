@@ -17,7 +17,6 @@ export default function useAudioContext({ audioComponent }) {
 
       setAudioContext(context);
       setAnalyser(analyserNode);
-      console.log("test");
     }
   };
 
@@ -30,7 +29,6 @@ export default function useAudioContext({ audioComponent }) {
   useEffect(() => {
     if (audioContext && analyser && audioComponent.current) {
       if (!audioSourceRef.current) {
-        console.log("test2");
         const source = audioContext.createMediaElementSource(audioComponent.current);
         source.connect(analyser);
         analyser.connect(audioContext.destination);

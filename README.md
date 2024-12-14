@@ -5,7 +5,7 @@
 - context API
 - sessionStorage
 - audio web api
-- tone.js(피치 시프팅)
+<!-- - tone.js(피치 시프팅) -->
 
 # 기능
 
@@ -33,24 +33,26 @@
 
 ## 컨트롤바, 커스텀 프로그레스바, 타이머 ✅
 
-## 오디오 비주얼라이저 ✅
+## 오디오 비주얼라이저 출력 문제 ✅
 
 <!-- 절차 디테일 필요 -->
 
-### 오디오 비주얼라이저 구현 시 문제
+### 에러
 
 InvalidStateError: Failed to execute 'createMediaElementSource' on 'AudioContext': HTMLMediaElement already connected previously to a different MediaElementSourceNode.
 at... 에러 발생.
 
 ### 원인
 
-InvalidStateError는 동일한 HTMLAudioElement(여기서는 `<audio>` 태그)가 이미 다른 MediaElementAudioSourceNode에 연결되어 있을 때 발생합니다. Web Audio API에서 하나의HTMLAudioElement는 단 하나의 MediaElementAudioSourceNode에만 연결될 수 있습니다. 이를 해결하려면 AudioContext와 MediaElementAudioSourceNode의 연결 상태를 관리하거나, 새 연결을 생성할 때 기존 연결을 해제해야 합니다.
+InvalidStateError는 동일한 HTMLAudioElement(여기서는 `<audio>` 태그)가 이미 다른 MediaElementAudioSourceNode에 연결되어 있을 때 발생한다. Web Audio API에서 하나의HTMLAudioElement는 단 하나의 MediaElementAudioSourceNode에만 연결될 수 있다.
 
--> + audioRef.current가 context.createMediaElementSource로 이미 연결된 상태에서 다시 연결을 시도. + 파일 업로드 시마다 새로운 AudioContext나 MediaElementSourceNode를 생성하면서 충돌.
+이를 해결하려면 AudioContext와 MediaElementAudioSourceNode의 연결 상태를 관리하거나, 새 연결을 생성할 때 기존 연결을 해제해야 한다.
+
+정리 -> + audioRef.current가 context.createMediaElementSource로 이미 연결된 상태에서 다시 연결을 시도. + 파일 업로드 시마다 새로운 AudioContext나 MediaElementSourceNode를 생성하면서 충돌.
 
 ### HTMLMediaElement ?
 
-HTMLMediaElement는 HTML에서 `<audio>`나 `<video>` 태그와 같은 미디어 요소를 나타내는 객체입니다. 이는 오디오/비디오 파일을 재생하는 데 사용됩니다.
+HTMLMediaElement는 HTML에서 `<audio>`나 `<video>` 태그와 같은 미디어 요소를 나타내는 객체입니다. 이는 오디오/비디오 파일을 재생하는 데 사용됨.
 
 - 주요 특징
 
@@ -70,7 +72,7 @@ audioElement.pause(); // 일시 정지
 
 ### MediaElementSourceNode ?
 
-MediaElementSourceNode는 Web Audio API의 객체로, HTMLMediaElement에서 오디오 데이터를 가져와 오디오 그래프에 연결할 수 있도록 합니다. 이를 통해 오디오 데이터를 분석하거나 조작할 수 있습니다.
+MediaElementSourceNode는 Web Audio API의 객체로, HTMLMediaElement에서 오디오 데이터를 가져와 오디오 그래프에 연결한다. 이를 통해 오디오 데이터를 분석하거나 조작이 가능해진다.
 
 - 주요 특징
 
@@ -78,7 +80,7 @@ MediaElementSourceNode는 Web Audio API의 객체로, HTMLMediaElement에서 오
 
 - 생성 방법
 
-  AudioContext의 createMediaElementSource() 메서드를 사용하여 만듭니다:
+  AudioContext의 createMediaElementSource() 메서드를 사용하여 생성 가능하다.
 
 ```
 const audioElement = document.getElementById('myAudio');
@@ -267,38 +269,25 @@ export default AudioVisualizer;
 
    audioContext와 analyser는 별도의 useState로 관리하여 초기화 순서 문제 방지.
 
-## AnalyserNode 연결 문제
+## AnalyserNode 연결 문제 ✅
 
 ```
 const source = audioContext.createMediaElementSource(audio.current);
 ```
 
-위 코드에서 useRef로 저장한 `<audio>` 요소(audio.current)가 아닌 new Audio로 생성한 객체를 전달하여 AnalyserNode가 오디오 데이터를 제대로 수집하지 못해 비주얼라이저가 제대로 출력되지 않음. `<audio>` 요소를 전달해줌으로서 해결
+위 코드에서 useRef로 저장한 `<audio>` 요소가 아닌 new Audio로 생성한 객체를 전달하여 AnalyserNode가 오디오 데이터를 제대로 수집하지 못해 비주얼라이저가 제대로 출력되지 않음. `<audio>` 요소를 전달 해줌으로서 해결.
 
 ## 음악 속도 조절 ✅
 
-1. Web Audio API와 Tone.js 혼합 사용하여 충돌 발생. -> Tonejs는 로드 시 AudioContext를 자체적으로 생성함. 따라서 Web Audio API에서 생성한 AudioContext와 충돌 발생. Tone.js
+HTMLMediaElement playBackRate 프로퍼티를 통해 속도 조절.
+
+## 배포 시 AudioContext가 사용자 상호작용 이전에 생성되어 음악이 재생되지 않는 문제 ✅
+
+<!-- 좀 더 확인 필요 -->
+
+음악을 추가하고 재생 버튼 클릭 이후에 AudioContext 생성하도록 하여 해결.
 
 ## 음악 높낮이(pitch) 조절 ❌
-
-음 높낮이를 조절(pitch shifting)하려면 **타임 스트레칭(Time Stretching)**과 **주파수 이동(Frequency Shifting)**을 사용해야 합니다. 이는 Web Audio API의 기본 제공 노드로는 어렵고, 복잡한 신호 처리가 필요합니다.
-
-### 가능한 방법:
-
-1. DSP(Digital Signal Processing) 라이브러리 사용:
-
-```
-   Pitch.js
-   Tone.js
-   Sonic.js
-```
-
-2. AudioWorkletProcessor로 직접 구현:
-
-FFT(고속 푸리에 변환) 또는 Phase Vocoder 알고리즘을 사용하여 신호를 분석하고 재구성합니다.
-Web Audio API에서는 매우 낮은 레벨에서 작업해야 하므로 복잡도가 높습니다.
-
-## Edge, Opera 브라우저에서 재생 안되는 문제 ❌
 
 ## 오디오 파일
 

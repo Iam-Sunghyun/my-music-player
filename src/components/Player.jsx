@@ -94,10 +94,9 @@ function Player() {
         autoPlay
         hidden
       />
-      <div className={style.controllerArea}>
-        <SpeedController audioComponent={audioComponent} />
-        {/* <PitchController audio={audio} audioComponent={audioComponent} /> */}
-      </div>
+
+      <SpeedController audioComponent={audioComponent} />
+      {/* <PitchController audio={audio} audioComponent={audioComponent} /> */}
     </Card>
   );
 }

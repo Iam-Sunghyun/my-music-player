@@ -19,7 +19,7 @@
 body {
   width: 100vw;
   min-width: 25rem;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
