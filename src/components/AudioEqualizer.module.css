@@ -1,0 +1,22 @@
+.equalizer {
+  position: absolute;
+  background-color: white;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  height: 30rem;
+  transition: transform 0.5s ease;
+  transform: translateY(102%);
+}
+
+.popIn {
+  transform: translateY(102%);
+}
+
+.popUp {
+  transform: translateY(0);
+}
+
+header p {
+  font-size: 1.2rem;
+}
