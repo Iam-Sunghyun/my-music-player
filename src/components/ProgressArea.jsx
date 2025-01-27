@@ -2,15 +2,15 @@ import { useMusicList } from "../context/MusicProvider";
 import timer from "../utils/timer";
 import style from "./ProgressArea.module.css";
 
-function ProgressArea({ audio, duration, currentTime, setCurrentTime }) {
+function ProgressArea({ audioElement, duration, currentTime, setCurrentTime }) {
   const { current } = useMusicList();
 
   // 프로그레스바 클릭 이벤트 핸들러
   const handleProgressBarClick = (e) => {
     const width = e.currentTarget.clientWidth; // progressArea 너비를 픽셀로 반환
-    const offsetX = e.nativeEvent.offsetX; // offsetX -> 해당 이벤트와 대상 노드 내 여백 사이의 마우스 포인터의 수평 좌표를 제공
+    const offsetX = e.nativeEvent.offsetX; // offsetX -> 해당 이벤트와 대상 노드 내 여백 사이의 마우스 포인터의 수평 좌표를 제공, e.nativeEvent => react의 브라우저 이벤트(Dom event) 객체
     const clicked = (offsetX / width) * duration; // 클릭한 위치의 시간 값(초) 계산
-    audio.current.currentTime = clicked; // audio 요소 현재 시간 업데이트
+    audioElement.current.currentTime = clicked; // audio 요소 현재 시간 업데이트
     setCurrentTime(clicked);
   };
 

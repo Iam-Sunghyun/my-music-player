@@ -1,17 +1,15 @@
 import { useEffect } from "react";
-import style from "./Controller.module.css";
 import { useMusicList } from "../context/MusicProvider";
-import ProgressArea from "./ProgressArea";
+import style from "./Controller.module.css";
 
 function Controller({
-  audio,
+  audioElement,
   setLoop,
   loop,
   setVolumeBtn,
   volumeBtn,
   setVolume,
   volume,
-  setPlayPause,
   playPause,
   setCurrentTime,
 }) {
@@ -19,23 +17,22 @@ function Controller({
 
   // 재생, 정지 버튼 핸들러
   const handlePlayPause = () => {
-    setPlayPause((prev) => !prev);
     if (playPause) {
-      audio?.current?.pause();
+      audioElement?.current?.pause();
     } else {
-      audio?.current?.play();
+      audioElement?.current?.play();
     }
   };
 
   // 이전 버튼 클릭 이벤트
   const handlePrevMusic = () => {
     // 노래가 0초대라면 이전 곡으로
-    if (Math.floor(audio.current.currentTime) === 0) {
+    if (Math.floor(audioElement.current.currentTime) === 0) {
       setCurrentIndex((n) => (n - 1 < 0 ? musics.length - 1 : n - 1));
 
       // 0초 초과면 노래 시작으로
     } else {
-      audio.current.currentTime = 0;
+      audioElement.current.currentTime = 0;
     }
   };
 
@@ -62,11 +59,8 @@ function Controller({
 
     // 선택한 곡이 없거나 삭제되면 play 버튼 렌더링, 곡 선택시 자동 재생과 pause 버튼 렌더링
     if (!current) {
-      audio?.current?.pause();
+      audioElement?.current?.pause();
       setCurrentTime(0);
-      setPlayPause(false);
-    } else {
-      setPlayPause(true);
     }
   }, [currentIndex, current]);
 
@@ -98,7 +92,7 @@ function Controller({
       </span>
 
       <span onClick={() => setVolumeBtn((b) => !b)} className="material-symbols-outlined">
-        {`${audio?.current?.volume === 0 ? "volume_off" : "volume_up"}`}
+        {`${audioElement?.current?.volume === 0 ? "volume_off" : "volume_up"}`}
       </span>
 
       {volumeBtn ? (
@@ -110,7 +104,7 @@ function Controller({
             type="range"
             value={volume}
             onChange={(e) => {
-              audio.current.volume = e.target.value / 100;
+              audioElement.current.volume = e.target.value / 100;
               setVolume(e.target.value);
             }}
             min={0}

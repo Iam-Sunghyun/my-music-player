@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./SpeedController.module.css";
 
-function SpeedController({ audioComponent }) {
+function SpeedController({ audioElement }) {
   const [speed, setSpeed] = useState(1);
 
   // 음악 속도 변경 핸들러
@@ -9,16 +9,16 @@ function SpeedController({ audioComponent }) {
     const newSpeed = parseFloat(e.target.value);
     setSpeed(newSpeed);
 
-    if (audioComponent.current) {
-      audioComponent.current.playbackRate = newSpeed; // HTMLAudioElement(audio 태그)의 playbackRate 설정
+    if (audioElement.current) {
+      audioElement.current.playbackRate = newSpeed; // HTMLAudioElement(audio 태그)의 playbackRate 설정
     }
   };
 
   // 리셋 버튼 핸들러
   const handleResetSpeed = () => {
     setSpeed(1);
-    if (audioComponent.current) {
-      audioComponent.current.playbackRate = 1;
+    if (audioElement.current) {
+      audioElement.current.playbackRate = 1;
     }
   };
 
