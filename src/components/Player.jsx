@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMusicList } from "../context/MusicProvider";
 import useAudioContext from "../hooks/useAudioContext";
 import Card from "../ui/Card";
@@ -11,10 +11,12 @@ import ProgressArea from "./ProgressArea";
 import SongDetails from "./SongDetails";
 import SpeedController from "./SpeedController";
 import TopBar from "./TopBar";
+import AudioEqualizer from "./AudioEqualizer";
 import * as Tone from "tone";
 
 function Player() {
   const [popUpPlayList, setPopUpPlayList] = useState(false);
+  const [popUpEqualizer, setPopUpEqualizer] = useState(false);
   const { musics, setCurrent, current, setCurrentIndex, currentIndex } = useMusicList();
   const [playPause, setPlayPause] = useState(false);
   const [loop, setLoop] = useState(0); // 0 -> 기본, 1 -> 루프, 2 -> 셔플
@@ -22,12 +24,13 @@ function Player() {
   const [volume, setVolume] = useState(50);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const audio = new Audio(current?.objectURL); // HTMLAudioElement
-  const audioComponent = useRef();
+  const audio = new Audio(current?.objectURL); // HTMLAudioElement 객체
+  const audioElement = useRef(); // Audio 요소 참조
 
-  const { analyser } = useAudioContext({ audioComponent });
+  // canvas 오디오 비주얼라이저를 위한 주파수 분석용 analyser
+  const { analyser } = useAudioContext(audioElement);
 
-  // 오디오 메타데이터 로드 이벤트
+  // 오디오 객체 메타데이터 로드 이벤트(음악 총 길이 저장)
   audio.onloadedmetadata = () => {
     if (audio.readyState > 0) {
       setDuration(audio?.duration);
@@ -36,7 +39,7 @@ function Player() {
 
   // audio onTimeUpdate 이벤트 핸들러
   const handleCurrentTime = () => {
-    const time = audioComponent.current.currentTime;
+    const time = audioElement.current.currentTime;
     setCurrentTime(time);
   };
 
@@ -57,45 +60,53 @@ function Player() {
         random = Math.floor(Math.random() * musics.length);
       }
       setCurrentIndex(random);
+      setCurrent(musics[random]);
     }
   };
 
   return (
     <Card className={style.playerCard}>
-      <TopBar popUpPlayList={popUpPlayList} setPopUpPlayList={setPopUpPlayList} />
+      <TopBar
+        popUpPlayList={popUpPlayList}
+        setPopUpPlayList={setPopUpPlayList}
+        popUpEqualizer={popUpEqualizer}
+        setPopUpEqualizer={setPopUpEqualizer}
+      />
       <AudioVisualizer analyser={analyser} />
       <SongDetails />
       <ProgressArea
-        audio={audioComponent}
+        audioElement={audioElement}
         currentTime={currentTime}
         setCurrentTime={setCurrentTime}
         duration={duration}
       />
 
       <Controller
-        audio={audioComponent}
+        audioElement={audioElement}
         setLoop={setLoop}
         loop={loop}
         setVolumeBtn={setVolumeBtn}
         volumeBtn={volumeBtn}
         setVolume={setVolume}
         volume={volume}
-        setPlayPause={setPlayPause}
         playPause={playPause}
         setCurrentTime={setCurrentTime}
       />
       <PopUpPlayList popUpPlayList={popUpPlayList} />
+      <AudioEqualizer popUpEqualizer={popUpEqualizer} />
       <audio
-        ref={audioComponent}
+        ref={audioElement}
         loop={loop === 1 ? true : false}
         src={current?.objectURL}
         onTimeUpdate={handleCurrentTime}
         onEnded={handleOnEnded}
+        onPause={() => setPlayPause(false)}
+        onPlay={() => setPlayPause(true)}
         autoPlay
         hidden
       />
 
-      <SpeedController audioComponent={audioComponent} />
+      <SpeedController audioElement={audioElement} />
       {/* <PitchController audio={audio} audioComponent={audioComponent} /> */}
     </Card>
   );
