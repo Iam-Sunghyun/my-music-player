@@ -2,7 +2,6 @@ import Card from "../ui/Card";
 import style from "./PopUpPlayList.module.css";
 import ListItem from "./ListItem";
 import AddMusic from "./AddMusic";
-import { memo } from "react";
 
 function PopUpPlayList({ popUpPlayList }) {
   return (
@@ -16,4 +15,4 @@ function PopUpPlayList({ popUpPlayList }) {
   );
 }
 
-export default memo(PopUpPlayList);
+export default PopUpPlayList;
