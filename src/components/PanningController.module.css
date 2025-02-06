@@ -1,0 +1,19 @@
+.panningController {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.panningController div {
+  width: 4rem;
+}
+
+.panning {
+  width: 2rem;
+  text-align: center;
+}
+
+.panningController input {
+  width: 10rem;
+}
