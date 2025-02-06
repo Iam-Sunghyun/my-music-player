@@ -1,12 +1,34 @@
 .equalizer {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   background-color: white;
   left: 0;
   bottom: 0;
   margin: 0;
-  height: 30rem;
+  height: 24rem;
+  gap: 0.5rem;
   transition: transform 0.5s ease;
   transform: translateY(102%);
+}
+
+/* writing-mode -> */
+.equalizerBar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin: 1rem auto 0.5rem;
+  writing-mode: sideways-lr;
+}
+
+.equalizerBar input {
+  /* margin-top: 2rem; */
+}
+
+.frequencyValue {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .popIn {
