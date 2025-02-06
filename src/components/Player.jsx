@@ -1,18 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMusicList } from "../context/MusicProvider";
 import useAudioContext from "../hooks/useAudioContext";
 import Card from "../ui/Card";
+import AudioEqualizer from "./AudioEqualizer";
 import AudioVisualizer from "./AudioVisualizer";
 import Controller from "./Controller";
-import PitchController from "./PitchController";
 import style from "./Player.module.css";
 import PopUpPlayList from "./PopUpPlayList";
 import ProgressArea from "./ProgressArea";
 import SongDetails from "./SongDetails";
-import SpeedController from "./SpeedController";
 import TopBar from "./TopBar";
-import AudioEqualizer from "./AudioEqualizer";
-import * as Tone from "tone";
 
 function Player() {
   const [popUpPlayList, setPopUpPlayList] = useState(false);
@@ -20,15 +17,12 @@ function Player() {
   const { musics, setCurrent, current, setCurrentIndex, currentIndex } = useMusicList();
   const [playPause, setPlayPause] = useState(false);
   const [loop, setLoop] = useState(0); // 0 -> 기본, 1 -> 루프, 2 -> 셔플
-  const [volumeBtn, setVolumeBtn] = useState(false);
-  const [volume, setVolume] = useState(50);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const audio = new Audio(current?.objectURL); // HTMLAudioElement 객체
   const audioElement = useRef(); // Audio 요소 참조
 
-  // canvas 오디오 비주얼라이저를 위한 주파수 분석용 analyser
-  const { analyser } = useAudioContext(audioElement);
+  const { analyser, audioContext, panner, filters } = useAudioContext(audioElement);
 
   // 오디오 객체 메타데이터 로드 이벤트(음악 총 길이 저장)
   audio.onloadedmetadata = () => {
@@ -80,20 +74,26 @@ function Player() {
         setCurrentTime={setCurrentTime}
         duration={duration}
       />
-
       <Controller
         audioElement={audioElement}
         setLoop={setLoop}
         loop={loop}
-        setVolumeBtn={setVolumeBtn}
-        volumeBtn={volumeBtn}
-        setVolume={setVolume}
-        volume={volume}
         playPause={playPause}
         setCurrentTime={setCurrentTime}
+        musics={musics}
+        setCurrent={setCurrent}
+        current={current}
+        setCurrentIndex={setCurrentIndex}
+        currentIndex={currentIndex}
       />
       <PopUpPlayList popUpPlayList={popUpPlayList} />
-      <AudioEqualizer popUpEqualizer={popUpEqualizer} />
+      <AudioEqualizer
+        popUpEqualizer={popUpEqualizer}
+        audioContext={audioContext}
+        audioElement={audioElement}
+        panner={panner}
+        filters={filters}
+      />
       <audio
         ref={audioElement}
         loop={loop === 1 ? true : false}
@@ -105,9 +105,6 @@ function Player() {
         autoPlay
         hidden
       />
-
-      <SpeedController audioElement={audioElement} />
-      {/* <PitchController audio={audio} audioComponent={audioComponent} /> */}
     </Card>
   );
 }
