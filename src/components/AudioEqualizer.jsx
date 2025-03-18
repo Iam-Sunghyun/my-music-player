@@ -5,21 +5,24 @@ import SpeedController from "./SpeedController";
 
 const EQ_FREQUENCIES = [60, 170, 310, 600, 1000, 3000, 6000];
 
-function AudioEqualizer({ popUpEqualizer, audioElement, panner, filters }) {
+function AudioEqualizer({ popUpEqualizer, setPopUpEqualizer, audioElement, panner, filters }) {
   return (
     <Card className={`${style.equalizer} ${popUpEqualizer ? style.popUp : style.popIn}`}>
-      <header>
+      <header className={style.header}>
         <p>Equalizer</p>
+        <span onClick={() => setPopUpEqualizer(false)} className="material-symbols-outlined">
+          close
+        </span>
       </header>
 
       <div className={style.equalizerBar}>
         {filters.map((n, i) => (
           <div key={i}>
             <input
-              // 음악 선택 전엔 비활성화
-              style={{ pointerEvents: Number.isInteger(filters[i]) ? `none` : "" }}
               onChange={(e) => {
-                filters[i].gain.value = e.target.value;
+                if (!Number.isInteger(filters[i])) {
+                  filters[i].gain.value = e.target.value;
+                }
               }}
               id={`bar${i + 1}`}
               type="range"
@@ -38,9 +41,8 @@ function AudioEqualizer({ popUpEqualizer, audioElement, panner, filters }) {
         ))}
       </div>
 
-      <div>
+      <div className={style.controllers}>
         <PanningController panner={panner} />
-
         <SpeedController audioElement={audioElement} />
       </div>
     </Card>

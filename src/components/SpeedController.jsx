@@ -9,15 +9,15 @@ function SpeedController({ audioElement }) {
     const newSpeed = parseFloat(e.target.value);
     setSpeed(newSpeed);
 
-    if (audioElement.current) {
-      audioElement.current.playbackRate = newSpeed; // HTMLAudioElement(audio 태그)의 playbackRate 설정
+    if (audioElement) {
+      audioElement.current.playbackRate = newSpeed; //
     }
   };
 
   // 리셋 버튼 핸들러
   const handleResetSpeed = () => {
     setSpeed(1);
-    if (audioElement.current) {
+    if (audioElement) {
       audioElement.current.playbackRate = 1;
     }
   };

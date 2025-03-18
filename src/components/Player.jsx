@@ -89,6 +89,7 @@ function Player() {
       <PopUpPlayList popUpPlayList={popUpPlayList} />
       <AudioEqualizer
         popUpEqualizer={popUpEqualizer}
+        setPopUpEqualizer={setPopUpEqualizer}
         audioContext={audioContext}
         audioElement={audioElement}
         panner={panner}

@@ -1,6 +1,6 @@
 .progressArea {
   width: 100%;
-  height: 6px;
+  height: 5px;
 
   /* background: linear-gradient(90deg, var(--light-blue-1), var(--light-blue-2)); */
   background: var(--light-blue-1);
@@ -18,8 +18,8 @@
 
 .progressBar::before {
   content: "";
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   background: var(--blue-4);
   position: absolute;
   top: -25%;
@@ -40,5 +40,5 @@
 }
 
 .timer span {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useMusicList } from "../context/MusicProvider";
 import style from "./ListItem.module.css";
 

@@ -122,8 +122,7 @@ function Controller({
         <div className={style.volume}>
           <span className="material-symbols-outlined">volume_up</span>
           <input
-            id="volume-bar"
-            className={style.volumeBar}
+            id={style.volumeBar}
             type="range"
             value={volume}
             onChange={(e) => {

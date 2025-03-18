@@ -38,3 +38,31 @@ input[type="file"] {
   overflow: hidden;
   border: 0;
 }
+
+/* 바 스타일 */
+input[type="range"] {
+  -webkit-appearance: none; /* Chrome, Safari */
+  -moz-appearance: none; /* Firefox */
+  appearance: none; /* 기본 스타일 제거 */
+
+  background: var(--light-blue-1);
+  border-radius: 5px;
+  outline: none;
+}
+
+/* 썸(슬라이더) 스타일  */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Chrome, Safari */
+  -moz-appearance: none; /* Firefox */
+  appearance: none; /* 기본 스타일 제거 */
+  width: 0.9rem;
+  height: 0.9rem;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* 구글 아이콘 크기 */
+span.material-symbols-outlined {
+  font-size: 1.5rem;
+}

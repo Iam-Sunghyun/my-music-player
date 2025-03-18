@@ -4,9 +4,9 @@
   position: relative;
   align-items: center;
   justify-content: space-between;
-  height: 42rem;
+  height: 35rem;
   overflow: hidden;
-  padding: 1.5rem 2.5rem;
+  padding: 1.5rem 2.3rem;
 }
 
 /* .controllerArea {

@@ -16,7 +16,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgb(203, 203, 203);
-  padding: 0.9rem;
+  padding: 0.9rem 0.6rem;
   cursor: pointer;
   overflow-y: scroll;
 }
@@ -43,7 +43,7 @@
 }
 
 .musicName {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .artistName {
