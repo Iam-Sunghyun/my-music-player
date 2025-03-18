@@ -50,10 +50,7 @@
 }
 
 #volumeBar {
-  -webkit-appearance: auto; /* Chrome, Safari */
-  -moz-appearance: auto; /* Firefox */
-  appearance: auto; /* 기본 스타일 제거 */
-  margin: 0.55rem 0;
+  height: 30%;
 }
 
 .progressArea {
