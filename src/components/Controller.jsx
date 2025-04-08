@@ -15,7 +15,7 @@ function Controller({
   currentIndex,
 }) {
   const [volumeBtn, setVolumeBtn] = useState(false);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(35);
 
   // 재생, 정지 버튼 핸들러
   const handlePlayPause = () => {
@@ -120,17 +120,16 @@ function Controller({
 
       {volumeBtn ? (
         <div className={style.volume}>
-          <span className="material-symbols-outlined">volume_up</span>
           <input
             id={style.volumeBar}
             type="range"
             value={volume}
             onChange={(e) => {
-              audioElement.current.volume = e.target.value / 100;
+              audioElement.current.volume = e.target.value / 70;
               setVolume(e.target.value);
             }}
             min={0}
-            max={100}
+            max={70}
             step={1}
           />
         </div>

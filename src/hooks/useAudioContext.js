@@ -44,7 +44,7 @@ export default function useAudioContext(audioElement) {
     }
   };
 
-  // 음악을 선택한 상태에서 audioContext와 analyser가 없는 경우 AudioContext 및 AnalyserNode들을 초기화하는 effect -> 사용자 상호작용 없이 AudioContext 생성 혹은 활성화 불가능하므로 현재 음악 선택 후 AudioContext 생성하도록 함.
+  // 음악을 선택한 상태에서 audioContext가 없는 경우 AudioContext 및 각종 오디오 노드들을 초기화하는 effect -> 사용자 상호작용 없이 AudioContext 생성 혹은 활성화 불가능하므로 현재 음악 선택 후 AudioContext 생성하도록 하기 위함.
   useEffect(() => {
     if (current && !audioContext) {
       initAudioContext();
@@ -58,7 +58,6 @@ export default function useAudioContext(audioElement) {
       if (!audioSourceRef.current) {
         // 1. 오디오 소스 노드(MediaElementAudioSourceNode) 생성
         const source = audioContext.createMediaElementSource(audioElement.current);
-
         // 2. 이퀄라이저 필터들을 체인으로 연결
         source.connect(filters[0]); // 첫 번째 필터를 오디오 소스에 연결
         for (let i = 0; i < filters.length - 1; i++) {
@@ -67,6 +66,7 @@ export default function useAudioContext(audioElement) {
 
         // 3. 마지막 필터를 analyser 및 panner에 연결 후 출력 장치에 연결
         filters[filters.length - 1].connect(analyser);
+
         analyser.connect(panner);
         panner.connect(audioContext.destination);
 

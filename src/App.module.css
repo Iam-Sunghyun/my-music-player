@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.wrapper :global(span) {
+.wrapper span {
   user-select: none;
   cursor: pointer;
 }

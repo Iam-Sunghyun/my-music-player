@@ -40,17 +40,22 @@
 }
 
 .volume {
-  background: rgb(215, 215, 215);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  background: rgb(190, 190, 190);
   width: 165px;
   height: 30px;
   position: absolute;
-  right: -45px;
+  right: -44px;
   bottom: 145px;
   transform: rotate(270deg);
 }
 
 #volumeBar {
   height: 30%;
+  width: 80%;
+  margin: 0.8rem 1.25rem;
 }
 
 .progressArea {
