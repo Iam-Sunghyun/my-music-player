@@ -1,8 +1,17 @@
+.playListCard {
+  height: 35rem;
+}
+
 .playList {
   display: flex;
   flex-direction: column;
   background: white;
-  height: 35rem;
+  /* height: 35rem; */
+}
+
+.playListBody {
+  width: 100%;
+  height: 100%;
 }
 
 .header {
@@ -21,7 +30,7 @@
 }
 
 @media screen and (max-width: 48rem) {
-  .playList {
+  .playListCard {
     display: none;
   }
 }
