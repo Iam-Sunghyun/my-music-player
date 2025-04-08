@@ -2,15 +2,38 @@ import Card from "../ui/Card";
 import style from "./AudioEqualizer.module.css";
 import PanningController from "./PanningController";
 import SpeedController from "./SpeedController";
+import { useEffect, useState } from "react";
 
 const EQ_FREQUENCIES = [60, 170, 310, 600, 1000, 3000, 6000];
 
 function AudioEqualizer({ popUpEqualizer, setPopUpEqualizer, audioElement, panner, filters }) {
+  const [hide, setHide] = useState(false);
+
+  // 팝업 이퀄라이저 popIn 시 포커스 방지용
+  useEffect(() => {
+    if (!popUpEqualizer) {
+      // 닫을 때 visibility를 나중에(0.3초 뒤) hidden으로 처리
+      const timer = setTimeout(() => {
+        setHide(true);
+      }, 300); // transition 시간과 맞춰서
+      return () => clearTimeout(timer);
+    } else {
+      // 열릴 때는 바로 보여줌
+      setHide(false);
+    }
+  }, [popUpEqualizer]);
+
   return (
-    <Card className={`${style.equalizer} ${popUpEqualizer ? style.popUp : style.popIn}`}>
+    <Card
+      className={`${style.equalizer} ${popUpEqualizer ? style.popUp : style.popIn}`}
+      hide={hide}
+    >
       <header className={style.header}>
         <p>Equalizer</p>
-        <span onClick={() => setPopUpEqualizer(false)} className="material-symbols-outlined">
+        <span
+          onClick={() => setPopUpEqualizer((prev) => !prev)}
+          className="material-symbols-outlined"
+        >
           close
         </span>
       </header>
@@ -43,6 +66,7 @@ function AudioEqualizer({ popUpEqualizer, setPopUpEqualizer, audioElement, panne
 
       <div className={style.controllers}>
         <PanningController panner={panner} />
+        {/* <PitchController pitchShift={pitchShift} audioElement={audioElement} /> */}
         <SpeedController audioElement={audioElement} />
       </div>
     </Card>
