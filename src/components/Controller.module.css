@@ -24,7 +24,8 @@
   align-items: center;
 }
 
-.playPause {
+.playPause span {
+  font-size: 2.2rem;
   width: 52px;
   height: 52px;
   display: flex;
@@ -33,10 +34,6 @@
   border-radius: 100%;
   box-shadow: 0 0 8px rgb(157, 157, 157);
   /* background: linear-gradient(white, rgb(221, 221, 221)); */
-}
-
-.playPause span {
-  font-size: 2.2rem;
 }
 
 .volume {
