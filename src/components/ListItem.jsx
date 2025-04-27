@@ -39,23 +39,30 @@ function ListItem() {
 
   return (
     <ul className={style.list} onClick={handleFileSelected}>
-      {musics.map((music) => {
-        return (
-          <li
-            className={`${style.listItem} ${
-              current?.name === music.name ? style.listItemSelected : ""
-            }`}
-            key={music.name}
-          >
-            <div className={style.musicDetails}>
-              <p className={style.musicName}>{music.name}</p>
-              {/* <p className={style.artistName}>{music.artist}</p> */}
-            </div>
-            {/* <p className={style.musicLength}>3:40</p> */}
-            <span className="material-symbols-outlined">close</span>
-          </li>
-        );
-      })}
+      {musics.length > 0 ? (
+        musics.map((music) => {
+          return (
+            <li
+              className={`${style.listItem} ${
+                current?.name === music.name ? style.listItemSelected : ""
+              }`}
+              key={music.name}
+            >
+              <div className={style.musicDetails}>
+                <p className={style.musicName}>{music.name}</p>
+                {/* <p className={style.artistName}>{music.artist}</p> */}
+              </div>
+              {/* <p className={style.musicLength}>3:40</p> */}
+              <span className="material-symbols-outlined">close</span>
+            </li>
+          );
+        })
+      ) : (
+        <div className={style.emptyList}>
+          <p className={style.emptyTextOne}>음악이 없습니다.</p>
+          <p className={style.emptyTextTwo}>드래그하거나 우측 상단 버튼으로 추가하세요!</p>
+        </div>
+      )}
     </ul>
   );
 }
