@@ -13,8 +13,8 @@ function ListItem() {
       const selected = musics.filter((f) => f.name === e.target.previousSibling.textContent);
 
       setMusics((files) => files.filter((f) => f.name !== selected[0].name));
-      // setCurrent(null);
-      // setCurrentIndex(null);
+      setCurrent(null);
+      setCurrentIndex(null);
 
       // 세션 스토리지 특정 파일 삭제
       // const files = JSON.parse(sessionStorage.getItem("audioFiles"));
