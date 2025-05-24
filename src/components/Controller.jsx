@@ -73,27 +73,27 @@ function Controller({
       <span
         onClick={() => {
           setLoop((prev) => (prev + 1) % 3);
-          // if (loop === 0) {
-          //   toast("한곡 반복");
-          // } else if (loop === 1) {
-          //   toast("셔 플");
-          // } else if (loop === 2) {
-          //   toast("다음 곡 재생");
-          // }
+          if (loop === 0) {
+            toast("한 곡 반복");
+          } else if (loop === 1) {
+            toast("셔 플");
+          } else if (loop === 2) {
+            toast("다음 곡 재생");
+          }
         }}
         id="repeat-plist"
         className="material-symbols-outlined"
       >
-        {/* <Toaster
+        <Toaster
           toastOptions={{
             className: "",
             style: {
+              fontSize: "26px",
               "-webkit-text-fill-color": "#000",
-              fontSize: "20px",
             },
             duration: 2000,
           }}
-        /> */}
+        />
         {loop === 0 ? "trending_flat" : loop === 1 ? "repeat_one" : "shuffle"}
       </span>
 
