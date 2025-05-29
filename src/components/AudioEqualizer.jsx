@@ -12,11 +12,8 @@ function AudioEqualizer({ popUpEqualizer, setPopUpEqualizer, audioElement, panne
   // 팝업 이퀄라이저 popIn 시 포커스 방지용
   useEffect(() => {
     if (!popUpEqualizer) {
-      // 닫을 때 visibility를 나중에(0.3초 뒤) hidden으로 처리
-      const timer = setTimeout(() => {
-        setHide(true);
-      }, 300); // transition 시간과 맞춰서
-      return () => clearTimeout(timer);
+      // 닫을 때 visibility를 나중에(0.2초 뒤) hidden으로 처리
+      setHide(true);
     } else {
       // 열릴 때는 바로 보여줌
       setHide(false);
@@ -43,6 +40,7 @@ function AudioEqualizer({ popUpEqualizer, setPopUpEqualizer, audioElement, panne
           <div key={i}>
             <input
               onChange={(e) => {
+                // filters의 요소 값이 Number가 아니라는 것은 이퀄라이저 필터가 생성됐다는 의미. useAudioContext.js 참조
                 if (!Number.isInteger(filters[i])) {
                   filters[i].gain.value = e.target.value;
                 }
