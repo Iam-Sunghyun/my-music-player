@@ -5,6 +5,7 @@ function Card({ children, className, hide }) {
     <div
       className={`${style.container} ${className}`}
       style={{ visibility: hide ? "hidden" : "visible" }}
+      inert={hide ? "true" : undefined}
     >
       {children}
     </div>
