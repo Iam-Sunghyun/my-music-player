@@ -1,31 +1,66 @@
-# tech
+# 사용 기술
 
 - React
 - css-modules
 - context API
-- sessionStorage
-- audio web api
-<!-- - tone.js(피치 시프팅) -->
+- Web Audio API
+- canvas API
+- vite
+- react-hot-toast
+  <!-- - tone.js(피치 시프팅) -->
+
+# 동기
+
+<!-- 실행 시 바로 재생할 수 있게 기본 음악 1~2개 정도 추가하기 -->
+
+평소 가사가 없는 lofi 음악을 자주 듣기 때문에 음악 플레이어를 만들어 보고 싶었다.
+
+음악을 추가하고 재생하는 기본적인 앱을 만든 후 좀 더 깊이 있게 만들고 싶어져 비주얼라이저와 이퀄라이저 기능을 추가하였다.
+
+구글 검색으로 디자인을 참고했고 기능 구현은 직접 하였다.
+
+가장 익숙하고 많이 사용되는 React를 사용해 UI를 구현하였고 CSS Modules를 사용하여 순수 CSS의 감을 잃지 않고자 하였다.
+
+또한 Web Audio API와 sessionStorage를 사용하여 브라우저에서 제공되는 기능들을 경험할 수 있었다.
 
 # 기능
 
+## popUp 메뉴들(이퀄라이저, 플레이리스트) tap 키 눌렀을 때 밖으로 빠져나오는 현상 ✅
+
+<!-- *** 미해결 *** -->
+
+transition과 transform을 통해 메뉴를 하단에서 부드럽게 끌어올리는 효과를 주기 위해 display: none, visibility: hidden이 아닌 상태로 숨겨져 있었음. 따라서 탭 키를 누르면 포커스 되어 밖으로 빠져 나와버리는 현상 발생 ->
+useEffect와 타이머를 이용해 popIn(메뉴 닫기) 시 0.3초 뒤 visibility: hidden 되게 만들어 부드럽게 내려서 사라지는 효과는 보여지고, 다 사라졌을 시 hidden되어 포커스는 잡히지 않게 만듦.
+
+## 드래그앤드롭 파일 업로드 ✅
+
+<!--  -->
+
+## canvas API 기본적인 사용법
+
+<!--  -->
+
+## requestAnimationFrame 사용법
+
+<!--  -->
+
 ## 반응형(미디어 쿼리) ✅ ->
 
-플레이 리스트를 하나의 컴포넌트로 재사용하려 했으나(화면이 축소됐을 떄 하단 슬라이드 리스트, 큰 화면 그냥 리스트) display 속성이 동일하게 적용되어 반응형 페이지 생성에 문제가 생기게 됨. 따라서 플레이 리스트의 내부 리스트만 컴포넌트로 추출하여 재사용하고 껍데기는 따로 생성해주었다.
+<!-- 플레이 리스트를 하나의 컴포넌트로 재사용하려 했으나(화면이 축소됐을 떄 하단 슬라이드 리스트, 큰 화면 그냥 리스트) display 속성이 동일하게 적용되어 반응형 페이지 생성에 문제가 생기게 됨. 따라서 플레이 리스트의 내부 리스트만 컴포넌트로 추출하여 재사용하고 껍데기는 따로 생성해주었다. -->
 
 ## 플레이 리스트 음악 추가/삭제 ✅ ->
 
-음악 데이터, 현재 인덱스 sessionStorage, context API에 저장, context의 경우 래퍼 컴포넌트 따로 분리하여 관리
+음악 리스트, 현재 선택된 음악 관련 정보는 sessionStorage, context API에 저장하여 관리하였으며 Context의 경우 가독성을 위해 래퍼 컴포넌트 따로 분리하여 주었다.
 
 ## 음악 삭제 시 문제 ✅ ->
 
 1. 방금 추가한 음악을 삭제후 동일한 음악을 다시 추가했을 시 추가되지 않는 문제 발생.
 
-   -> input[type="file"] 요소에 같은 파일을 업로드 했을 시 onChange 이벤트가 발생하지 않는다. 따라서 event.target.value를 null로 초기화해주어 동일한 파일이 업로드 되어도 onChange 이벤트가 트리거 되도록 해줌.
+   -> input[type="file"] 요소에 같은 파일을 업로드 하면 onChange 이벤트가 발생하지 않는다. 따라서 파일 sessionStorage에 저장 후 input[type="file"]의 값을 가리키는 event.target.value를 null로 초기화해주어 동일한 파일이 삭제 후 다시 업로드 되어도 onChange 이벤트가 발생하지 않는 일이 없도록 해주었다.
 
-2. URL.createObjectURL()로 생성한 URL이 새로고침 혹은 사이트 재접속 하면(해당 페이지의 document가 사라지면) 무효화되는 문제
+2. URL.createObjectURL()로 생성한 blob URL이 새로고침 혹은 사이트 재접속 하면(해당 페이지의 document가 사라지면) 무효화되는 문제
 
-   -> 일단 localStorage에서 sessionStorage로 변경
+   -> localStorage에서 sessionStorage로 변경
 
 ## 음악 루프, 셔플 ✅
 
@@ -33,9 +68,14 @@
 
 ## 컨트롤바, 커스텀 프로그레스바, 타이머 ✅
 
-## 오디오 비주얼라이저 출력 문제 ✅
+## 오디오 비주얼라이저 및 이퀄라이저✅
 
 <!-- 절차 디테일 필요 -->
+
+1. 음악을 폴더로부터 추가하고 선택.
+2. 음악 선택 시 useAudioContext 커스텀 훅 내에 오디오 컨텍스트(window.AudioContext)와 오디오 이퀄라이저 노드(좌우 밸런스, 특정 주파수 값 조절 노드), 비주얼라이저를 위한 주파수 데이터를 담고있는 분석기 노드를 생성하는 useEffect 조건문 실행.
+3. 오디오 노드들이 생성되면 useAudioContext내에 오디오 그래프를 생성하고 모두 연결하는 useEffect 조건문 실행.
+4. 오디오 노드들을 state에 저장하여 불필요하게 재생성 되지 않도록 하고 마지막에 return하여 필요한 컴포넌트에서 값을 조절할 수 있게 하였다.
 
 ### 에러
 
@@ -44,15 +84,15 @@ at... 에러 발생.
 
 ### 원인
 
-InvalidStateError는 동일한 HTMLAudioElement(여기서는 `<audio>` 태그)가 이미 다른 MediaElementAudioSourceNode에 연결되어 있을 때 발생한다. Web Audio API에서 하나의HTMLAudioElement는 단 하나의 MediaElementAudioSourceNode에만 연결될 수 있다.
+InvalidStateError는 동일한 HTMLAudioElement(`<audio>` 요소)가 이미 다른 오디오 소스 노드(MediaElementAudioSourceNode)에 연결되어 있을 때 발생한다. Web Audio API에서 하나의 `<audio>`(HTMLAudioElement)는 단 하나의 오디오 소스 노드(MediaElementAudioSourceNode)에 연결될 수 있다.
 
-이를 해결하려면 AudioContext와 MediaElementAudioSourceNode의 연결 상태를 관리하거나, 새 연결을 생성할 때 기존 연결을 해제해야 한다.
+이를 해결하려면 오디오 컨텍스트(AudioContext)와 오디오 소스 노드(MediaElementAudioSourceNode)의 여러번 연결되지 않게 관리하거나, 새 연결을 생성할 때 기존 연결을 해제해야 한다.
 
-정리 -> + audioRef.current가 context.createMediaElementSource로 이미 연결된 상태에서 다시 연결을 시도. + 파일 업로드 시마다 새로운 AudioContext나 MediaElementSourceNode를 생성하면서 충돌.
+정리 -> 음악이 변경될 때마다 오디오 소스 노드(MediaElementAudioSourceNode)가 생성 되었던 것을 useEffect 내에 조건문을 사용해 처음 한번만 생성하도록 수정
 
 ### HTMLMediaElement ?
 
-HTMLMediaElement는 HTML에서 `<audio>`나 `<video>` 태그와 같은 미디어 요소를 나타내는 객체입니다. 이는 오디오/비디오 파일을 재생하는 데 사용됨.
+HTMLMediaElement는 HTML에서 `<audio>`나 `<video>` 태그와 같은 미디어 요소를 나타내는 객체이다. 이는 오디오/비디오 파일을 재생하는 데 사용됨.
 
 - 주요 특징
 
@@ -70,13 +110,13 @@ audioElement.play(); // 재생
 audioElement.pause(); // 일시 정지
 ```
 
-### MediaElementSourceNode ?
+### MediaElementAudioSourceNode ?
 
-MediaElementSourceNode는 Web Audio API의 객체로, HTMLMediaElement에서 오디오 데이터를 가져와 오디오 그래프에 연결한다. 이를 통해 오디오 데이터를 분석하거나 조작이 가능해진다.
+MediaElementAudioSourceNode는 Web Audio API의 객체로, HTMLAudioElement에서 오디오 데이터를 가져와 오디오 소스 노드를 생성한다. 이를 통해 오디오 데이터를 분석하거나 조작이 가능해진다.
 
 - 주요 특징
 
-  Web Audio API의 일부. HTMLMediaElement의 소리를 오디오 그래프에 연결하여 필터링, 분석 가능. 하나의 HTMLMediaElement는 **하나의 MediaElementSourceNode** 와만 연결 가능.
+  Web Audio API의 일부. HTMLMediaElement의 소리를 오디오 그래프에 연결하여 필터링, 분석 가능. 하나의 HTMLMediaElement는 **하나의 MediaElementSourceNode 와만 연결 가능.**
 
 - 생성 방법
 
@@ -93,6 +133,7 @@ const sourceNode = audioContext.createMediaElementSource(audioElement);
 sourceNode.connect(audioContext.destination);
 ```
 
+<!--
 ### 해결 전 코드
 
 ```
@@ -168,7 +209,6 @@ function AudioVisualizer({ audio }) {
 }
 
 export default AudioVisualizer;
-
 ```
 
 ### 해결 후 코드
@@ -267,15 +307,13 @@ export default AudioVisualizer;
 
 3. AudioContext와 AnalyserNode 분리 초기화
 
-   audioContext와 analyser는 별도의 useState로 관리하여 초기화 순서 문제 방지.
+   audioContext와 analyser는 별도의 useState로 관리하여 초기화 순서 문제 방지. -->
 
-## AnalyserNode 연결 문제 ✅
+<!-- ## AnalyserNode 연결 문제 ✅
 
-```
-const source = audioContext.createMediaElementSource(audio.current);
-```
+`audioContext.createMediaElementSource()` 메서드에 `<audio>` 요소가 아닌 `new Audio()`로 생성한 객체를 전달하여 AnalyserNode가 오디오 주파수 데이터를 제대로 수집하지 못해 비주얼라이저가 제대로 출력되지 않음.
 
-위 코드에서 useRef로 저장한 `<audio>` 요소가 아닌 new Audio로 생성한 객체를 전달하여 AnalyserNode가 오디오 데이터를 제대로 수집하지 못해 비주얼라이저가 제대로 출력되지 않음. `<audio>` 요소를 전달 해줌으로서 해결.
+`<audio>` 요소를 전달 해줌으로서 해결. -->
 
 ## 음악 속도 조절 ✅
 
@@ -283,12 +321,8 @@ HTMLMediaElement playBackRate 프로퍼티를 통해 속도 조절.
 
 ## 배포 시 AudioContext가 사용자 상호작용 이전에 생성되어 음악이 재생되지 않는 문제 ✅
 
-<!-- 좀 더 확인 필요 -->
-
-음악을 추가하고 재생 버튼 클릭 이후에 AudioContext 생성하도록 하여 해결.
-
-## 음악 높낮이(pitch) 조절 ❌
+음악을 추가하고 음악을 선택한 이후(사용자 상호작용 후)에 AudioContext 생성하도록 하여 해결.
 
 ## 오디오 파일
 
-URL.createObjectURL()로 생성한 URL은 blob:으로 시작하며 이는 브라우저의 메모리 내에서 동적으로 생성된 URL이다. 따라서 브라우저가 종료되면 무효화 된다.
+URL.createObjectURL()로 생성한 URL은 blob:으로 시작하며 이는 브라우저의 메모리 내에서 동적으로 생성된 URL이다. 따라서 브라우저가 종료되거나 document가 사라지면(새로고침) 무효화 된다.
